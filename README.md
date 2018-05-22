@@ -1,6 +1,6 @@
 # Summary on Several Technical Subjects
-Persisent Memory (NVDIMM)
-Chromium OS Test Criteria
-Machine Learning
-Android Application Development
-Nativescript-Vue based Application Development
+Persisent Memory (NVDIMM) <br />
+Chromium OS Test Criteria <br />
+Machine Learning <br />
+Android Application Development <br />
+Nativescript-Vue based Application Development <br />
