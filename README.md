@@ -14,3 +14,4 @@ https://github.com/sagartesla/flops-cnn/blob/master/flops_calculation.py <br />
 https://www.zhihu.com/question/65305385 <br />
 http://imatge-upc.github.io/telecombcn-2016-dlcv/slides/D2L1-memory.pdf <br />
 https://pdfs.semanticscholar.org/64db/333bb1b830f937b47d786921af4a6c2b3233.pdf <br />
+https://www.slideshare.net/Eduardyantov/face-recognition-from-scratch-to-hatch <br />
