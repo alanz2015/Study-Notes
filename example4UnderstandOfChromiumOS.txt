@@ -1,0 +1,111 @@
+diff --git a/drivers/Kconfig b/drivers/Kconfig
+index 531123e..20a3a8b 100644
+--- a/drivers/Kconfig
++++ b/drivers/Kconfig
+@@ -168,4 +168,5 @@ source "drivers/reset/Kconfig"
+  
+ source "drivers/cpuquiet/Kconfig"
+  
++source "drivers/hello/Kconfig"
+ endmenu
+diff --git a/drivers/Makefile b/drivers/Makefile
+index 52c9308..4c1a328 100644
+--- a/drivers/Makefile
++++ b/drivers/Makefile
+@@ -153,3 +153,4 @@ obj-$(CONFIG_VME_BUS)       += vme/
+ obj-$(CONFIG_IPACK_BUS)        += ipack/
+ obj-$(CONFIG_NTB)      += ntb/
+ obj-$(CONFIG_CPU_QUIET)        += cpuquiet/
++obj-$(CONFIG_HELLO_TEST)   += hello/
+diff --git a/drivers/hello/Kconfig b/drivers/hello/Kconfig
+new file mode 100644
+index 0000000..b9ca5f0
+--- /dev/null
++++ b/drivers/hello/Kconfig
+@@ -0,0 +1,14 @@
++#
++# Input device configuration
++#
++
++menu "Hello Test"
++
++config HELLO_TEST
++   tristate "Hello to ChromeOS..."
++   default y
++   help
++      Say hello to ChromeOS!
++
++endmenu
++
+diff --git a/drivers/hello/Makefile b/drivers/hello/Makefile
+new file mode 100644
+index 0000000..7a6f67c
+--- /dev/null
++++ b/drivers/hello/Makefile
+@@ -0,0 +1 @@
++obj-$(CONFIG_HELLO_TEST)       += hello.o
+diff --git a/drivers/hello/hello.c b/drivers/hello/hello.c
+new file mode 100644
+index 0000000..4cd0ceb
+--- /dev/null
++++ b/drivers/hello/hello.c
+@@ -0,0 +1,21 @@
++#include <linux/init.h>
++#include <linux/module.h>
++#include <linux/kernel.h>
++#include <linux/device.h>
++
++MODULE_DESCRIPTION("hello module");
++MODULE_LICENSE("GPL");
++ 
++static int __init hello_module_init(void)
++{
++    printk(KERN_DEBUG "Hello ChromeOS...\n");
++    return 0;
++}
++
++static void __exit hello_module_cleanup(void)
++{
++    printk(KERN_DEBUG "Bye ChromeOS!\n");
++}
++
++module_init(hello_module_init);
++module_exit(hello_module_cleanup);
+
+
+diff --git a/eclass/cros-kernel2.eclass b/eclass/cros-kernel2.eclass
+index 56011e6..9d8ee40 100644
+--- a/eclass/cros-kernel2.eclass
++++ b/eclass/cros-kernel2.eclass
+@@ -88,6 +88,7 @@ CONFIG_FRAGMENTS=(
+        wifi_debug
+        wireless34
+        x32
++       hello
+ )
+  
+ acpi_ac_off_desc="Turn off ACPI AC"
+@@ -348,6 +349,11 @@ x32_config="
+ CONFIG_X86_X32=y
+ "
+  
++hello_desc="Hello ChromeOS"
++hello_config="
++CONFIG_HELLO_TEST=y
++"
++
+ wireless34_desc="Wireless 3.4 stack"
+ wireless34_config="
+
+diff --git a/overlay-YourPlatformName/make.conf b/overlay-YourPlatformName/make.conf
+index 8048317..1477e12 100644
+--- a/overlay-YourPlatformName/make.conf
++++ b/overlay-YourPlatformName/make.conf
+@@ -9,6 +9,7 @@ LINUX_FIRMWARE="iwlwifi-7260 ibt-hw fw_sst"
+ USE="${USE} cros_ec dptf kernel-3_10 lockvt"
+ USE="${USE} YourPlatformName"
+ USE="${USE} wireless38"
++USE="${USE} hello"
+  
+ # TODO(bhthompson): change to -march=slm when supported by CrOS GCC
+ MARCH_TUNE="-march=corei7"
