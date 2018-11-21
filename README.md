@@ -16,6 +16,8 @@ http://imatge-upc.github.io/telecombcn-2016-dlcv/slides/D2L1-memory.pdf <br />
 https://pdfs.semanticscholar.org/64db/333bb1b830f937b47d786921af4a6c2b3233.pdf <br />
 https://www.slideshare.net/Eduardyantov/face-recognition-from-scratch-to-hatch <br />
 
+How to train Yolo V3 Tiny : https://chtseng.wordpress.com/2018/09/01/%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84yolo%E8%BE%A8%E8%AD%98%E6%A8%A1%E5%9E%8B-%E4%BB%A5%E6%9F%91%E6%A9%98%E8%BE%A8%E8%AD%98%E7%82%BA%E4%BE%8B/  <br />
+
 # How to solve building failure involving with pygraphviz
 在Ubuntu上直接
 sudo apt-get install graphviz graphviz-dev
