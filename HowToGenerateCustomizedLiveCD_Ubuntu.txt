@@ -1,0 +1,98 @@
+The steps to generate a LiveCD customized Ubuntu release
+
+Step 1: 
+sudo apt-get install debootstrap
+
+# alternatively, download the package and run sudo dpkg -i debootstrap_$VERSION.deb
+
+mkdir -p work/chroot
+
+cd work
+
+sudo debootstrap --arch=amd64 xenial chroot 
+
+Step 2:
+sudo mount --bind /dev chroot/dev
+sudo cp /etc/hosts chroot/etc/hosts
+sudo cp /etc/resolv.conf chroot/etc/resolv.conf
+sudo cp /etc/apt/sources.list chroot/etc/apt/sources.list
+Note: If you are bootstrapping a release of Ubuntu other then the release you are currently running you should substitute the 'sudo cp /etc/apt/sources.list chroot/etc/apt/sources.list' command with the following.
+
+
+sudo sed s/<Release-You-Are-On>/<Release-You-Are-Bootstrapping>/ < /etc/apt/sources.list > chroot/etc/apt/sources.list
+
+Step 3:
+sudo chroot chroot
+
+mount none -t proc /proc
+mount none -t sysfs /sys
+mount none -t devpts /dev/pts
+export HOME=/root
+export LC_ALL=C
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 12345678  #Substitute "12345678" with the PPA's OpenPGP ID.
+apt-get update  // Need to specify proxy here
+apt-get install --yes dbus
+dbus-uuidgen > /var/lib/dbus/machine-id
+dpkg-divert --local --rename --add /sbin/initctl
+
+NOTE: If remove everything, you need to do "umount" one by one.
+
+Step 4:
+Upgrade packages if you want: 
+
+
+apt-get --yes upgrade
+Install packages needed for Live System:
+
+apt-get install --yes ubuntu-standard casper lupin-casper
+apt-get install --yes discover laptop-detect os-prober
+apt-get install --yes linux-generic 
+
+apt-get install fakeroot build-essential devscripts
+apt-get install crash kexec-tools makedumpfile kernel-wedge
+apt-get build-dep linux-image-$(uname -r)
+apt-get install git libncurses5 libncurses5-dev libnewt-dev
+
+Step 5:
+To retrieve specifid kernel release bundled with Ubuntu release (xenial), to do
+sudo git clone git://kernel.ubuntu.com/ubuntu/ubuntu-xenial.git
+
+inside the "git clone" directory, you can see there exist ubuntu-flavor scripts.
+
+Step 6:
+root@alanzelite-VirtualBox:/ubuntu-xenial# head -5 Makefile
+VERSION = 4
+PATCHLEVEL = 4
+SUBLEVEL = 59
+EXTRAVERSION =
+NAME = Blurry Fish Butt
+root@alanzelite-VirtualBox:/ubuntu-xenial# git rm debian.master/changelog
+
+DEBEMAIL="zhangx2000@hotmail.com"; DEBFULLNAME="Alan Zhang"; dch -v 4.4.59-999.201705081943 --distribution xenial --package linux --create -c debian.master/changelog Mainline build: v4.4.59
+
+Modify check files
+During modification of configuration files and during the compilation process, Ubuntu does some checks to see if it all looks good but as we are not compiling a kernel with Ubuntu patches these checks might fail. Therefor we will be modifying these files and instead of doing it manually we’ll use a small script to accomplish the needed changes.
+
+for i in debian/scripts/*-check debian.master/scripts/*-check
+do
+    if [ -f "$i" ]; then
+        cat - <<eom>"$i"
+#!/bin/sh
+exit 0
+EOM
+        chmod 755 "$i"
+    fi
+done
+</eom>
+
+git commit -a -m "Our own kernel"
+
+Step 7:
+Create a new config
+
+
+Quotation:
+https://help.ubuntu.com/community/LiveCDCustomizationFromScratch
+http://blog.avirtualhome.com/compile-mainline-kernel-ubuntu/
+
+
