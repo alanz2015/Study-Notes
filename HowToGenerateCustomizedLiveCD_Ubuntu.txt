@@ -9,7 +9,7 @@ mkdir -p work/chroot
 
 cd work
 
-sudo debootstrap --arch=amd64 xenial chroot 
+sudo debootstrap --arch=amd64 xenial|trusty|... chroot 
 
 Step 2:
 sudo mount --bind /dev chroot/dev
@@ -92,7 +92,8 @@ Create a new config
 
 
 Quotation:
+https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel
+https://help.ubuntu.com/community/Kernel/Compile
 https://help.ubuntu.com/community/LiveCDCustomizationFromScratch
-http://blog.avirtualhome.com/compile-mainline-kernel-ubuntu/
-
-
+https://wiki.ubuntu.com/KernelTeam/GitKernelBuild
+https://wiki.ubuntu.com/Kernel/MainlineBuilds
