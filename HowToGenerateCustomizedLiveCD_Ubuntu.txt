@@ -102,7 +102,11 @@ https://wiki.ubuntu.com/Kernel/MainlineBuilds
 
 How to enable Audio Enabling on Z8350 + Linux kernel 4.14.89
 ============================================================
-Source: https://askubuntu.com/questions/1004998/ubuntu-17-10-cherry-trail-problem-with-sound-funny-and-sad
+Source: 
+https://askubuntu.com/questions/1004998/ubuntu-17-10-cherry-trail-problem-with-sound-funny-and-sad
+https://patchwork.kernel.org/patch/9212963/
+https://docs.google.com/document/d/1AcXZI9dvJBW0Vy6h9vraD7VP9X_MpwHx0eJ6hNc4G_s/edit
+
 显示模块信息：
 $ modinfo module_name
 显示所有模块的配置信息：
