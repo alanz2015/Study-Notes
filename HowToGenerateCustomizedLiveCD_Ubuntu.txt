@@ -1,4 +1,5 @@
 The steps to generate a LiveCD customized Ubuntu release
+========================================================
 
 Step 1: 
 sudo apt-get install debootstrap
@@ -97,3 +98,41 @@ https://help.ubuntu.com/community/Kernel/Compile
 https://help.ubuntu.com/community/LiveCDCustomizationFromScratch
 https://wiki.ubuntu.com/KernelTeam/GitKernelBuild
 https://wiki.ubuntu.com/Kernel/MainlineBuilds
+
+
+How to enable Audio Enabling on Z8350 + Linux kernel 4.14.89
+============================================================
+Source: https://askubuntu.com/questions/1004998/ubuntu-17-10-cherry-trail-problem-with-sound-funny-and-sad
+显示模块信息：
+$ modinfo module_name
+显示所有模块的配置信息：
+$ modprobe -c | less
+显示某个模块的配置信息：
+$ modprobe -c | grep module_name
+显示一个装入模块使用的选项：
+$ systool -v -m module_name
+显示模块的依赖关系：
+$ modprobe --show-depends module_name
+
+
+in etc/modprobe.d create file blacklist_hdmi.conf with contents:
+
+blacklist snd_hdmi_lpe_audio
+download and run this linixium sh script:
+
+https://drive.google.com/file/d/0B99O3A0dDe67VUNMV2xfVjJKeVk/edit
+
+in /usr/share/alsa/ucm/ create a bytcr-rt5651 folder with contents:
+
+asound.state
+
+bytcr-rt5651.conf
+
+HiFi.conf
+
+sudo alsa force-reload
+
+rm -r ~/.pulse ~/.asound* ~/.pulse-cookie ~/.config/pulse
+pulseaudio -k
+reboot
+open pavucontrol and set configuration profile to HiFi and change output from headphones to speakers.
