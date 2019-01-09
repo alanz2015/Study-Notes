@@ -91,8 +91,20 @@ git commit -a -m "Our own kernel"
 Step 7:
 Create a new config
 
+Step 8:
+cd ../linux-4.14.89/
+ls -al
+git status
+make menuconfig
+perl -pi -e 's/.*CONFIG_LOCALVERSION=.*/CONFIG_LOCALVERSION=".alanz.0"/' .config
+make olddefconfig
+make -j8 bindeb-pkg
+
+Step 9:
+sudo dpkg -i ../*.deb
 
 Quotation:
+~~~~~~~~~~
 https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel
 https://help.ubuntu.com/community/Kernel/Compile
 https://help.ubuntu.com/community/LiveCDCustomizationFromScratch
@@ -140,3 +152,4 @@ rm -r ~/.pulse ~/.asound* ~/.pulse-cookie ~/.config/pulse
 pulseaudio -k
 reboot
 open pavucontrol and set configuration profile to HiFi and change output from headphones to speakers.
+
