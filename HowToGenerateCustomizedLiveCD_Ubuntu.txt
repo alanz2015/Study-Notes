@@ -110,6 +110,7 @@ https://help.ubuntu.com/community/Kernel/Compile
 https://help.ubuntu.com/community/LiveCDCustomizationFromScratch
 https://wiki.ubuntu.com/KernelTeam/GitKernelBuild
 https://wiki.ubuntu.com/Kernel/MainlineBuilds
+https://wiki.archlinux.org/index.php/kernel_parameters
 
 
 How to enable Audio Enabling on Z8350 + Linux kernel 4.14.89
