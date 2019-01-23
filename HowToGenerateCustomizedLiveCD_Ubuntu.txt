@@ -154,3 +154,38 @@ pulseaudio -k
 reboot
 open pavucontrol and set configuration profile to HiFi and change output from headphones to speakers.
 
+Bash script sample file:
+========================
+#!/bin/bash
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo dpkg -i ~/workspace/*.deb
+sudo echo "blacklist snd_hdmi_lpe_audio" >> /etc/modprobe.d/blacklist_hdmi.conf
+sudo -E ./linuxium-install-UCM-files.sh
+
+sudo alsa force-reload
+rm -r ~/.pulse ~/.asound* ~/.pulse-cookie ~/.config/pulse
+pulseaudio -k
+
+sudo cp ./brcmfmac43455-sdio.txt /lib/firmware/brcm/brcmfmac43455-sdio.txt
+
+sudo reboot
+
+---- End of File ----
+
+Enabling ES8316
+---------------
+Reference:
+https://bugzilla.kernel.org/show_bug.cgi?id=189261
+
+/sound/soc/codecs/es8316.c  : Codec driver. Should occur /sys/bus/acpi/devices/ESSX
+/sound/soc/codecs/es8316.h
+/sound/soc/codecs/Makefile
+/sound/soc/codecs/Kconfig
+/sound/soc/intel/Kconfig
+/sound/soc/intel/boards/cht_bsw_es8316.c | bytcht_es8316.c  : stands for Machine Driver that define DAI name i2c-ESSX8316:00.
+/sound/soc/intel/boards/Makefile
+/sound/soc/intel/sst/atom/sst_acpi.c    : Associated with /sys/bus/acpi/devices/808622AB:00/, enable SST module, also involve 'intel_sst_acpi 808622A8:00: Direct firmware load for intel/fw_sst_22a8.bin
+
+
