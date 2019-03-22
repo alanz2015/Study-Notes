@@ -1,6 +1,9 @@
 How to customize Ubuntu version Linux kernel
 ============================================
-https://askubuntu.com/questions/163298/whats-a-simple-way-to-recompile-the-kernel/830723#830723
+Reference:
+    * https://askubuntu.com/questions/163298/whats-a-simple-way-to-recompile-the-kernel/830723#830723
+    * http://r.outlyer.net/debian:kerneldeb
+
 1. Use apt-get source to download the Ubuntu version of the kernel
 
 apt-get source linux-image-$(uname -r)
@@ -29,7 +32,27 @@ sudo apt-get install libncurses5 libncurses5-dev
 make clean
 make mrproper
 make menuconfig
+
+#Install necessary things
+apt-get update
+apt-get install kernel-package libncurses5-dev fakeroot wget bzip2 build-essential -y
 fakeroot make-kpkg -j N --initrd --append-to-version=my-very-own-kernel kernel-image kernel-headers
+
+Trouble Shooting:
+~~~~~~~~~~~~~~~~~
+Sometimes when encounter dpkg-gencontrol failure for '_' char, can fix as following:
+make menuconfig -> General setup -> Local version - append to kernel release
+
+Add kernel commandline parameters:
++CONFIG_CMDLINE="foo=1"
++CONFIG_CMDLINE_EXTEND=y
+
+Check runtime:-
+$cat /proc/cmdline
+
+that is CONFIG_LOCALVERSION in the .config file.
+https://debian-handbook.info/browse/squeeze/sect.kernel-compilation.html
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 where N is how many jobs to run in parallel (usually the number of CPUs you have), and my-very-own-kernel is a custom string to identify this build.
 
