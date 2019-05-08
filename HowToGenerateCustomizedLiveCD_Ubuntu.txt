@@ -162,6 +162,15 @@ perl -pi -e 's/.*CONFIG_LOCALVERSION=.*/CONFIG_LOCALVERSION=".alanz.0"/' .config
 make olddefconfig
 make -j8 bindeb-pkg     # Inside Ubuntu kernel build env, use command "fakeroot debian/rules binary-debs flavours=generic" instead
 
+Another thread to Upgrade kernel w/ current usage kernel config file when encounter boot
+failure phenomena:
+
+* cp /boot/config-* kernel/arch/x86/configs/test4spurv_defconfig
+* ./scripts/kconfig/merge_config.sh arch/x86/configs/test4spurv_defconfig /YourAndroidAlternative/kernel.config
+* perl -pi -e 's/.*CONFIG_LOCALVERSION=.*/CONFIG_LOCALVERSION=".alanz20190506.0"/' .config
+* make olddefconfig
+* make -j8 bindeb-pkg
+
 Step 9:
 sudo dpkg -i ../*.deb
 
