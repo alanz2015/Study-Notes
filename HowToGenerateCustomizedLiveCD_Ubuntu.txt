@@ -2,7 +2,7 @@ How to customize Ubuntu version Linux kernel
 ============================================
 Reference:
     * https://askubuntu.com/questions/163298/whats-a-simple-way-to-recompile-the-kernel/830723#830723
-    * http://r.outlyer.net/debian:kerneldeb
+    * Building Kernel DEB packages: http://r.outlyer.net/debian:kerneldeb
 
 1. Use apt-get source to download the Ubuntu version of the kernel
 
@@ -182,6 +182,8 @@ https://help.ubuntu.com/community/LiveCDCustomizationFromScratch
 https://wiki.ubuntu.com/KernelTeam/GitKernelBuild
 https://wiki.ubuntu.com/Kernel/MainlineBuilds
 https://wiki.archlinux.org/index.php/kernel_parameters
+https://www.linuxquestions.org/questions/debian-26/how-to-install-debian-using-debootstrap-4175465295/
+https://unix.stackexchange.com/questions/275429/creating-bootable-debian-image-with-debootstrap
 
 
 How to enable Audio Enabling on Z8350 + Linux kernel 4.14.89
