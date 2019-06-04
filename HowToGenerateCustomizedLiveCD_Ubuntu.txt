@@ -266,3 +266,7 @@ Enabling AP6255 Bluetooth on Z8350
 Reference:
 https://lists.ubuntu.com/archives/kernel-team/2018-May/092134.html
 
+Set up Ubuntu VPN Guide
+-----------------------
+https://intelpedia.intel.com/VpnQuickStart
+https://wiki.ith.intel.com/display/CTSNMPDBG/Intel+VPN+on+Ubuntu+Linux
