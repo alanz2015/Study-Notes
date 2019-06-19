@@ -238,7 +238,7 @@ sudo echo "blacklist snd_hdmi_lpe_audio" >> /etc/modprobe.d/blacklist_hdmi.conf
 sudo -E ./linuxium-install-UCM-files.sh
 
 sudo alsa force-reload
-rm -r ~/.pulse ~/.asound* ~/.pulse-cookie ~/.config/pulse
+rm -r ~/.pulse ~/.asound* ~/.pulse-chttps://0xax.gitbooks.io/linux-insides/content/Booting/ookie ~/.config/pulse
 pulseaudio -k
 
 sudo cp ./brcmfmac43455-sdio.txt /lib/firmware/brcm/brcmfmac43455-sdio.txt
@@ -270,3 +270,17 @@ Set up Ubuntu VPN Guide
 -----------------------
 https://intelpedia.intel.com/VpnQuickStart
 https://wiki.ith.intel.com/display/CTSNMPDBG/Intel+VPN+on+Ubuntu+Linux
+
+Build kernel for Android
+------------------------
+export CROSS_COMPILE=$(pwd)/bin/aarch64-linux-android-
+export ARCH=arm64 && export SUBARCH=arm64 
+
+mkdir -p out
+make O=out clean
+make O=out mrproper
+make O=out <defconfig_name>
+make O=out -j$(nproc ¨Call)
+
+Reference Book: https://0xax.gitbooks.io/linux-insides/content/Booting/
+
