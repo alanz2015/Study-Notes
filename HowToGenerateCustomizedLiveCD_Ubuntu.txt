@@ -284,3 +284,8 @@ make O=out -j$(nproc ¨Call)
 
 Reference Book: https://0xax.gitbooks.io/linux-insides/content/Booting/
 
+How to boot Android-x86 Live CD for different graphic card
+----------------------------------------------------------
+https://github.com/openthos/system-analysis/issues/23
+https://www.android-x86.org/documentation/graphic_card.html
+https://www.makeuseof.com/tag/android-pc-phoenix-os/
