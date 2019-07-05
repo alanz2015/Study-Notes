@@ -271,8 +271,8 @@ Set up Ubuntu VPN Guide
 https://intelpedia.intel.com/VpnQuickStart
 https://wiki.ith.intel.com/display/CTSNMPDBG/Intel+VPN+on+Ubuntu+Linux
 
-Build kernel for Android
-------------------------
+Cross Build kernel for Android
+------------------------------
 export CROSS_COMPILE=$(pwd)/bin/aarch64-linux-android-
 export ARCH=arm64 && export SUBARCH=arm64 
 
@@ -280,12 +280,13 @@ mkdir -p out
 make O=out clean
 make O=out mrproper
 make O=out <defconfig_name>
-make O=out -j$(nproc ¨Call)
+make O=out -j$(nproc)
 
 Reference Book: https://0xax.gitbooks.io/linux-insides/content/Booting/
 
-How to boot Android-x86 Live CD for different graphic card
-----------------------------------------------------------
-https://github.com/openthos/system-analysis/issues/23
-https://www.android-x86.org/documentation/graphic_card.html
-https://www.makeuseof.com/tag/android-pc-phoenix-os/
+Portage Building Chain for Chromium OS
+--------------------------------------
+overlay-xxx --> baseboard-yyy ---> chipset-zzz
+
+Inside each overlay-xxx (ex. overlay-amd64-generic):
+layout.conf: 
