@@ -290,3 +290,19 @@ overlay-xxx --> baseboard-yyy ---> chipset-zzz
 
 Inside each overlay-xxx (ex. overlay-amd64-generic):
 layout.conf: 
+
+
+
+Intel Yocto Release Build Steps
+-------------------------------
+Step 1: Sync code: git clone https://github.com/intel/iotg-yocto-bsp-public.git -b e3900/master
+Step 2: Execute python script to retrieve packages by: ./setup/combo-layer ./setup/combolayer.conf
+Step 3: Set up TEMPLATECONF by: export TEMPLATECONF=/home/<user>/iotg-yocto-bsp-public/setup/bsp-conf/
+Step 4: Execute 1st building by: ./setup.sh
+For late build, just enter xxx/yocto_build, then execute "source ./oe-init-build-env .", then
+# For core-image-sato
+$ bitbake core-image-sato
+# For core-image-sato-sdk
+$ bitbake core-image-sato-sdk
+# For linux-kernel bzIMage only
+$ bitbake linux-intel
