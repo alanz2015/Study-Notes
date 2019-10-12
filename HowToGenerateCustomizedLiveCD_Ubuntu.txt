@@ -306,3 +306,11 @@ $ bitbake core-image-sato
 $ bitbake core-image-sato-sdk
 # For linux-kernel bzIMage only
 $ bitbake linux-intel
+
+Kernelflinger
+-------------
+Kernelflinger is the Intel UEFI bootloader for
+Android<sup>TM</sup>/Brillo<sup>TM</sup>. It is compatible with the
+[UEFI 2.4 specification](http://www.uefi.org/sites/default/files/resources/2_4_Errata_B.pdf).
+
+git submodule update --init --recursive
