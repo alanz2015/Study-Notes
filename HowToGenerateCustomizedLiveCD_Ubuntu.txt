@@ -314,3 +314,304 @@ Android<sup>TM</sup>/Brillo<sup>TM</sup>. It is compatible with the
 [UEFI 2.4 specification](http://www.uefi.org/sites/default/files/resources/2_4_Errata_B.pdf).
 
 git submodule update --init --recursive
+
+
+ShadowsocksR SSR on Ubuntu
+--------------------------
+Reference: https://arcdetri.github.io/shadowsocksr-ssr-on-ubuntu.html
+
+In this post, a browser on an Ubuntu client PC sends its traffic to a ShadowsocksR (SSR) proxy on a virtual private server (VPS).
+Official Source and Mirror
+
+You can obtain the materials you need to follow along with this tutorial from the official sources on Github:
+shadowsocksr-android-3.5.4.apk -- https://github.com/shadowsocksrr/shadowsocksr-android/releases/download/3.5.4/shadowsocksr-android-3.5.4.apk
+manyuser.zip -- https://github.com/shadowsocksrr/shadowsocksr/archive/manyuser.zip
+ShadowsocksR-win-4.9.0.zip -- https://github.com/shadowsocksrr/shadowsocksr-csharp/releases/download/4.9.0/ShadowsocksR-win-4.9.0.zip
+
+You can alternatively try a mirror:
+shadowsocksr-android-3.5.4.apk -- https://s3.tok.ap.cloud-object-storage.appdomain.cloud/xzdl/shadowsocksr-android-3.5.4.apk
+manyuser.zip -- https://s3.tok.ap.cloud-object-storage.appdomain.cloud/xzdl/manyuser.zip
+ShadowsocksR-win-4.9.0.zip -- https://s3.tok.ap.cloud-object-storage.appdomain.cloud/xzdl/ShadowsocksR-win-4.9.0.zip
+
+In either case, the sha256 checksums should be as follows:
+d2b443e11b3dbffebf52b76f27598bc3b830bb5339f26b911baa75c1ce53aee7 shadowsocksr-android-3.5.4.apk
+b9551c2a0a25b77218a6340cf1077fc0715b7d8841fd0334157923f62225519f manyuser.zip
+6f3a6cfd099d37492b1ac6ea3d504acc6d4c2948c9cc99de59d7488ef18bf6b1 ShadowsocksR-win-4.9.0.zip
+
+Server
+
+These instructions are for a virtual private server (VPS) running Ubuntu Linux 18.04.
+Download
+
+SSH into your server. For example, if your server has public IP address 3.4.5.6:
+
+ssh usernameonserver@3.4.5.6
+
+Update existing packages:
+
+sudo apt update
+sudo apt upgrade
+
+Install on your server the prerequisite packages for ShadowsocksR:
+
+sudo apt install wget zip unzip python-m2crypto libsodium23
+
+We are going to install ShadowsocksR into our /usr/local directory, so change into that directory:
+
+cd /usr/local
+
+Get the source either from Github:
+
+sudo wget https://github.com/shadowsocksrr/shadowsocksr/archive/manyuser.zip
+
+Or from a mirror:
+
+sudo wget https://s3.tok.ap.cloud-object-storage.appdomain.cloud/xzdl/manyuser.zip
+
+Check the integrity of the downloaded zip file with the sha256sum command:
+
+sha256sum manyuser.zip
+
+The SHA256 checksum should match the value stated at the beginning of this post.
+
+Unzip the download:
+
+sudo unzip manyuser.zip
+
+Rename the extracted directory:
+
+sudo mv shadowsocksr-manyuser shadowsocksr
+Configure
+
+Change into the extracted directory:
+
+cd shadowsocksr
+
+Create the initial ShadowsocksR configuration file:
+
+sudo bash initcfg.sh
+
+The IP address for ShadowsocksR to listen on is the internal IP address of the interface. You can find it with the command:
+
+ip a
+
+Edit the ShadowsocksR configuration file:
+
+sudo vi user-config.json
+
+Specify your values for the ShadowsocksR port, password, encryption method, protocol, obfuscation method, and so on.
+
+Here is an example file. Press the i key on your computer keyboard to enter insert mode.
+
+{
+"server": "0.0.0.0",
+"server_ipv6": "::",
+"server_port": 80,
+"local_address": "127.0.0.1",
+"local_port": 1080,
+"password": "86tufeE96hJJrdjr",
+"method": "none",
+"protocol": "auth_chain_a",
+"protocol_param": "",
+"obfs": "http_post",
+"obfs_param": "",
+"speed_limit_per_con": 0,
+"speed_limit_per_user": 0,
+"additional_ports" : {},
+"additional_ports_only" : false,
+"timeout": 120,
+"udp_timeout": 60,
+"dns_ipv6": false,
+"connect_verbose_info": 0,
+"redirect": "*:80#127.0.0.1:8080",
+"fast_open": false
+}
+
+Press Esc on your computer keyboard to escape from insert mode. Type :wq and press Enter to write the file to disk and quit the editor.
+
+Notice the redirect to localhost port 8080 in case of a bad password. In a moment, we will set up a web server to listen on localhost port 8080.
+Service
+
+Now create the systemd service file for SSR:
+
+sudo vi /etc/systemd/system/shadowsocksr.service
+
+Press the i key to enter insert mode. Insert contents as follows:
+
+[Unit]
+Description=ShadowsocksR server
+After=network.target
+Wants=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/shadowsocksr.pid
+ExecStart=/usr/bin/python /usr/local/shadowsocksr/shadowsocks/server.py --pid-file /var/run/shadowsocksr.pid -c /usr/local/shadowsocksr/user-config.json -d start
+ExecStop=/usr/bin/python /usr/local/shadowsocksr/shadowsocks/server.py --pid-file /var/run/shadowsocksr.pid -c /usr/local/shadowsocksr/user-config.json -d stop
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+Press Esc to get out of insert mode, then type :wq and press Enter to write the file out and quit the editor.
+
+Make SSR start on reboot, and also start it now:
+
+sudo systemctl enable shadowsocksr
+
+sudo systemctl start shadowsocksr
+
+Check that ShadowsocksR is active (running) and listening as expected:
+
+sudo systemctl status shadowsocksr
+
+sudo ss -tulpn | grep 80
+
+If there are any problems, you can look in the logs:
+
+sudo journalctl -u shadowsocksr
+
+sudo tail /var/log/shadowsocksr.log
+Website
+
+Now we will install the cover website. This will make the server look like a simple web server to any casual visitors to your external IP address.
+
+sudo apt install apache2
+
+Apache HTTP server will fail to start because ShadowsocksR is already listening on port 80. Before we deal with that, we will add some pages to the website.
+
+cd ~
+
+wget https://github.com/arcdetri/sample-blog/archive/master.zip
+
+unzip master.zip
+
+sudo cp -rf sample-blog-master/html/* /var/www/html/
+
+Now configure the web server listen only on localhost port 8080.
+
+sudo vi /etc/apache2/ports.conf
+
+Restrict the listen line:
+
+Listen 127.0.0.1:8080
+
+Press Esc if you were in insert mode, then type :wq and press Enter to write the file out and quit the editor.
+
+Make the corresponding change in the default virtual host:
+
+sudo vi /etc/apache2/sites-available/000-default.conf
+
+Change the first line:
+
+<VirtualHost 127.0.0.1:8080>
+
+Press Esc if you were in insert mode, then type :wq and press Enter to write the file out and quit the editor.
+
+Restart the web server with these changes applied:
+
+sudo systemctl restart apache2
+
+At this stage, you can check your cover website. We will use a public IP address of 3.4.5.6 as an example. Open a browser, and visit http://3.4.5.6. You should see your cover website.
+
+Exit your SSH session with the server:
+
+exit
+Client
+
+Now we work on the host PC, which is also running Ubuntu 18.04. Update existing packages:
+
+sudo apt update
+sudo apt upgrade
+Download
+
+Install on your local Ubuntu host the prerequisite packages for the SSR Python client:
+
+sudo apt install wget zip unzip python-m2crypto libsodium23
+
+We are going to install ShadowsocksR into our Downloads directory, so change into that directory:
+
+cd ~/Downloads
+
+Get the source either from Github:
+
+wget https://github.com/shadowsocksrr/shadowsocksr/archive/manyuser.zip
+
+Or from a mirror:
+
+wget https://s3.tok.ap.cloud-object-storage.appdomain.cloud/xzdl/manyuser.zip
+
+Check the integrity of the downloaded zip file with the sha256sum command:
+
+sha256sum manyuser.zip
+
+The SHA256 checksum should match the value stated earlier in this post.
+
+Unzip the download:
+
+unzip manyuser.zip
+
+Rename the extracted directory:
+
+mv shadowsocksr-manyuser shadowsocksr
+Configure
+
+Edit your initial ShadowsocksR configuration file.
+
+sudo vi /etc/shadowsocks.json
+
+You can start with the template below. Of course, you must substitute in your values for the ShadowsocksR server IP address, port, password, encryption method, protocol, obfuscation method, and so on. In this template, the public IP address of the server is given as 3.4.5.6 as an example.
+
+Press the i key on your keyboard to get into insert mode.
+
+{
+"server":"3.4.5.6",
+"server_ipv6":"::",
+"server_port":80,
+"local_address":"127.0.0.1",
+"local_port":1080,
+"password":"86tufeE96hJJrdjr",
+"timeout":300,
+"udp_timeout":60,
+"method":"none",
+"protocol":"auth_chain_a",
+"protocol_param":"",
+"obfs":"http_post",
+"obfs_param":"",
+"fast_open":false,
+"workers":1
+}
+
+When you have finished editing, write the file to disk and quit the editor.
+Start
+
+Change into the directory for the single-user version of SSR:
+
+cd shadowsocksr/shadowsocks
+
+Start the ShadowsocksR client running as a daemon:
+
+sudo python local.py -c /etc/shadowsocks.json -d start
+
+Check that it is running okay:
+
+sudo tail /var/log/shadowsocksr.log
+Configure Firefox
+
+Open Firefox. Configure Firefox to send traffic to localhost port 1080.
+
+    From the Firefox menu, select Preferences
+    You should be on the General page
+    Scroll down to Network Settings
+    Click Settings
+    Select Manual proxy configuration
+    For SOCKS Host, type 127.0.0.1
+    For Port, type 1080
+    Select SOCKS v5
+    Select Proxy DNS when using SOCKS v5
+    Click OK
+
+Now visit https://whatismyipaddress.com. You should see the IP address of your SSR server.
+
