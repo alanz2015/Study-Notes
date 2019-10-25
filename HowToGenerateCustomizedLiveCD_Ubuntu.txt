@@ -615,3 +615,15 @@ Open Firefox. Configure Firefox to send traffic to localhost port 1080.
 
 Now visit https://whatismyipaddress.com. You should see the IP address of your SSR server.
 
+
+Project Celadon Repo Sync
+-------------------------
+repo init -u ssh://android.intel.com/manifests -b android/celadon -m r1
+curl -uzhang1:AP6E1SKiP1zpZ82pHP1vo7AqLMT -O "https://mcg-depot.intel.com/artifactory/cactus-absp-jf/build/eng-builds/celadon/PSI/weekly/2019_WW41/manifest-celadon-2019_WW41-r1-generated.xml"
+mv manifest-celadon-2019_WW41-r1-generated.xml .repo/manifests/manifest-weekly.xml
+repo init -u ssh://android.intel.com/manifests -m manifest-weekly.xml
+repo sync --force-sync -j
+
+NOTE: Access "https://mcg-depot.intel.com/artifactory/webapp/#/home" to receive the above "curl ......" command parameter to
+      retrieve specified manifest-xxx.xml file.
+
