@@ -636,3 +636,6 @@ repo sync --force-sync -j4
 NOTE: Access "https://mcg-depot.intel.com/artifactory/webapp/#/home" to receive the above "curl ......" command parameter to
       retrieve specified manifest-xxx.xml file.
 
+# To disable bluetooth service due to not existed 
+adb shell pm disable com.android.bluetooth
+
