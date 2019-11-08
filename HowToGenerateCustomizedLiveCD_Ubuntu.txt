@@ -639,3 +639,7 @@ NOTE: Access "https://mcg-depot.intel.com/artifactory/webapp/#/home" to receive 
 # To disable bluetooth service due to not existed 
 adb shell pm disable com.android.bluetooth
 
+Linux Interrupt Explaination
+----------------------------
+http://www.gorecursion.com/virtualization/2016/12/17/pci-int.html
+
