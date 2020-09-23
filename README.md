@@ -44,6 +44,7 @@ pip install pygraphviz --install-option="--include-path='/usr/include/graphviz/'
 Reference:
 https://stackoverflow.com/questions/847179/multiple-glibc-libraries-on-a-single-host
 https://stackoverflow.com/questions/34042873/gcc-specs-file-how-to-get-the-installation-path
+
 最近，我在build一个混有32bit和64bit的代码时，遇到如下问题：
 * mmoc执行报错
   通过ldd命令，发现mmoc链接的库文件是64bit的ld-linux.so.2，而不是32bit的ld-linux.so.2，所以导致执行mmoc报出PRIVATRE_LIB的错误，通过在mmoc的Makefile的LDFLAGS加上
@@ -52,3 +53,7 @@ https://stackoverflow.com/questions/34042873/gcc-specs-file-how-to-get-the-insta
 The -rpath linker option will make the runtime loader search for libraries in /path/to/newglibc (so you wouldn't have to set LD_LIBRARY_PATH before running it), and the -dynamic-linker option will "bake" path to correct ld-linux.so.2 into the application.
   这样修复了mmoc爆出的错误。
   
+# Boot Chain w/ UEFI Bootloader such as GRUB
+Reference:
+https://segmentfault.com/a/1190000020850901
+https://zhuanlan.zhihu.com/p/28708585
