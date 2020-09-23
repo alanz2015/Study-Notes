@@ -39,3 +39,13 @@ pip install pygraphviz --install-option="--include-path='/usr/include/graphviz/'
 链接：https://www.jianshu.com/p/a3da7ecc5303
 來源：简书
 简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+
+# How to solve building failrue inside a 32bit and 64bit hybrid codebase
+最近，我在build一个混有32bit和64bit的代码时，遇到如下问题：
+* mmoc执行报错
+  通过ldd命令，发现mmoc链接的库文件是64bit的ld-linux.so.2，而不是32bit的ld-linux.so.2，所以导致执行mmoc报出PRIVATRE_LIB的错误，通过在mmoc的Makefile的LDFLAGS加上
+  -Wl,--rpath=/path/to/newglibc \
+  -Wl,--dynamic-linker=/path/to/newglibc/ld-linux.so.2
+The -rpath linker option will make the runtime loader search for libraries in /path/to/newglibc (so you wouldn't have to set LD_LIBRARY_PATH before running it), and the -dynamic-linker option will "bake" path to correct ld-linux.so.2 into the application.
+  这样修复了mmoc爆出的错误。
+  
