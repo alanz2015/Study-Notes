@@ -41,7 +41,7 @@ pip install pygraphviz --install-option="--include-path='/usr/include/graphviz/'
 简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
 
 # How to solve building failrue inside a 32bit and 64bit hybrid codebase
-Reference:
+Reference: 
 https://stackoverflow.com/questions/847179/multiple-glibc-libraries-on-a-single-host
 https://stackoverflow.com/questions/34042873/gcc-specs-file-how-to-get-the-installation-path
 
@@ -54,6 +54,11 @@ The -rpath linker option will make the runtime loader search for libraries in /p
   这样修复了mmoc爆出的错误。
   
 # Boot Chain w/ UEFI Bootloader such as GRUB
-Reference:
+Reference: 
 https://segmentfault.com/a/1190000020850901
 https://zhuanlan.zhihu.com/p/28708585
+
+# Fix "Failed to load ldlinux.c32"
+Reference: 
+https://github.com/kuzoncby/misc-tutorial/blob/master/Troubleshooting-Failed-to-Load-ldlinux.c32.md
+
