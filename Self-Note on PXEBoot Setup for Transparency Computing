@@ -119,3 +119,25 @@ Reference: https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html
     +----Ubuntu
            +----Boot
                   +----grubx64.efi
+In order to boot from both Ubunt and Windows, just set up inside windows:
+bcdedit /set {bootmgr} path \EFI\Ubuntu\grubx64.efi
+Change Windows bootmgfw.efi to be Ubuntu's grubx64.efi
+
+For exceptional case -- No Windows boot item shown up in GRUB boot menu, then:
+Edit /boot/grub/grub.cfg
+menuentry "Microsoft Windows 10" {
+  insmod part_get
+  insmod fat
+  insmod search_fs_uuid
+  insmod chain
+  search --fs-uuid --set=root $hints_string $fs_uuid
+  chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+}
+
+这里的 $hints_string，代表的是终端执行命令：
+sudo grub-probe --target=hints_string /boot/efi/EFI/Microsoft/Boot/bootmgfw.efi 后的输出。
+
+$fs_uuid 代表的是：
+sudo grub-probe --target=fs_uuid /boot/efi/EFI/Microsoft/Boot/bootmgfw.efi 的输出。
+
+然后保存。在终端执行命令：sudo grub-mkconfig -o /boot/grub/grub.cfg，就 OK 了。
