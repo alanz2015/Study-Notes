@@ -119,6 +119,17 @@ Reference: https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html
     +----Ubuntu
            +----Boot
                   +----grubx64.efi
+
+Generally, a boot variable to point to a vendor-specific bootloader program in UEFI that can be shown by "sudo efibootmgr -v" command.
+\EFI\$vendor\$bootloader.efi on the EFI System Partition (ESP), a specially tagged partition which is normally formatted using FAT32.
+For example,
+Debian installs grub-efi for its EFI bootloader, as:
+Architecture  Path  
+amd64         \EFI\debian\grubx64.efi
+i386          \EFI\debian\grubia32.efi
+arm64         \EFI\debian\grubaa64.efi
+Note: /EFI/Boot/bootx86.efi is specifically designed to isolate different vendor's GRUB firmware.
+
 In order to boot from both Ubunt and Windows, just set up inside windows:
 bcdedit /set {bootmgr} path \EFI\Ubuntu\grubx64.efi
 Change Windows bootmgfw.efi to be Ubuntu's grubx64.efi
