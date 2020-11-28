@@ -1,6 +1,7 @@
 Reference:
-https://circuitcellar.com/research-design-hub/build-a-4-dof-robotic-arm-part-1/
-http://www.robotplatform.com/knowledge.html
+5-DOF Robotic Arm Design Sample: https://circuitcellar.com/research-design-hub/build-a-4-dof-robotic-arm-part-1/
+General Knowledge on Robotic Design: http://www.robotplatform.com/knowledge.html
+Discussion on PID Control: https://robotics.stackexchange.com/questions/167/what-are-good-strategies-for-tuning-pid-loops
 
 This article describe a 4-DOF robotic arm design w/ 1 x DC motor and 4 x Digital Servo motor, and PID algo is design via Matlab.
 
