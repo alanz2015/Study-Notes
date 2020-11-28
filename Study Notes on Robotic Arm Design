@@ -1,6 +1,15 @@
 Reference:
 https://circuitcellar.com/research-design-hub/build-a-4-dof-robotic-arm-part-1/
+http://www.robotplatform.com/knowledge.html
 
 This article describe a 4-DOF robotic arm design w/ 1 x DC motor and 4 x Digital Servo motor, and PID algo is design via Matlab.
+
 Basic Concept
-Torque, Dead Band Width, 2-channel H-bridge Driver Module, bi-phase encoder
+-------------
+Torque, Dead Band Width, 2-channel H-bridge Driver Module, Bi-Phase Encoder
+
+It is important to have motors with the correct torque specifications for each one of the joints, there are free online apps to 
+calculate torque for robotic arm joints [4]. You need to provide inputs, such as the configuration of the robotic arm 
+(how many degrees of freedom it has), link lengths, link weights, loads and so on.
+We can begin the experimental robotic arm design based on the off-the-shelf aluminum robotic arm kit [3] to ease the mechanical 
+implementation and concentrate all efforts on the electronics and code parts of the system.
