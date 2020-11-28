@@ -1,0 +1,6 @@
+Reference:
+https://circuitcellar.com/research-design-hub/build-a-4-dof-robotic-arm-part-1/
+
+This article describe a 4-DOF robotic arm design w/ 1 x DC motor and 4 x Digital Servo motor, and PID algo is design via Matlab.
+Basic Concept
+Torque, Dead Band Width, 2-channel H-bridge Driver Module, bi-phase encoder
