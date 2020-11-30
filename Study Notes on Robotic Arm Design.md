@@ -1,0 +1,21 @@
+## Reference:
+* 5-DOF Robotic Arm Design Sample: https://circuitcellar.com/research-design-hub/build-a-4-dof-robotic-arm-part-1/
+* General Knowledge on Robotic Design: http://www.robotplatform.com/knowledge.html
+* Discussion on PID Control: https://robotics.stackexchange.com/questions/167/what-are-good-strategies-for-tuning-pid-loops
+* 正向运动学的数学知识: https://zhuanlan.zhihu.com/p/33985103  
+                   https://www.alanzucconi.com/2017/04/17/procedural-animations/
+* Python Robotic Resources: https://pythonrobotics.readthedocs.io/en/latest/getting_started.html
+* Robotic System Textbook: https://github.com/krishauser/RoboticSystemsBook/blob/079bfe5a8e649aef0b6409cc4b99820456fcf7ca/WhatIsRobotics.ipynb
+* Pandas自带的数据分析处理：http://www.360doc.com/content/20/0127/18/27915469_888197502.shtml
+
+This article describe a 4-DOF robotic arm design w/ 1 x DC motor and 4 x Digital Servo motor, and PID algo is design via Matlab.
+
+## Basic Concept
+
+Torque, Dead Band Width, 2-Channel H-bridge Driver Module, Bi-Phase Encoder, Configuration Space, Robot Pose Representation in three dimensions, Homogeneous Transformations, Denavit-Hartenberg parameters, Direct kinematics and inverse kinematics with the pseudo-inverse Jacobian
+
+It is important to have motors with the correct torque specifications for each one of the joints, there are free online apps to 
+calculate torque for robotic arm joints [4]. You need to provide inputs, such as the configuration of the robotic arm 
+(how many degrees of freedom it has), link lengths, link weights, loads and so on.
+We can begin the experimental robotic arm design based on the off-the-shelf aluminum robotic arm kit [3] to ease the mechanical 
+implementation and concentrate all efforts on the electronics and code parts of the system.
