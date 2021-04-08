@@ -1,0 +1,44 @@
+﻿How to support TFTPBOOT via yocto build result
+--------------------------------------------------------
+Background
+    Several projects involve enabling pxeboot in non-disk work station env, so here I summary on the guidance.
+    
+Steps
+1. Install tftpd & nfs servers and configure respetively
+    sudo apt-get install -y nfs-kernel-server xinetd tftpd tftp
+    Configure /etc/exports to add $HOME/nfsrootfs that can support NFS rootfs mount
+    Configure /etc/xinetd.d/tftp to set "server=/usr/sbin/in.tftpd  server_args=/tftpboot" that referenced by tftp server
+    
+2. Contents stored in /tftpboot/
+
+Maybe grub file bootx64.efi do not have network module.  You can try to use grub provided by Ubuntu http://archive.ubuntu.com/ubuntu/dists/trusty/main/uefi/grub2-amd64/current/grubnetx64.efi.signed
+
+Or  build your own grub that build-in with network capability.
+
+In your root tftp server create a grub folder with grub.cfg.
+/tftpboot/grub/grub.cfg
+
+Your grub.cfg should look like this
+=============================
+Set timeout 5
+
+menuentry "core-image-sato" {
+    linux image/bzImage
+    initrd image/initrd
+}
+
+==============================
+
+Put your image in tftp root
+/tftpboot/image/bzImage
+/tftpboot/image/initrd
+
+If you want to put your rootfs in NFS. You need to include network module in kernel and  extract your rootfs for example to /srv/rootfs.  Then your grub.cfg should be like this
+
+===================== grub.cfg ============================================
+Set timeout 5
+
+menuentry "core-image-sato-NFS" {
+    linux image/bzImage root=/dev/nfs rw nfsroot=192.168.1.1:/srv/rootfs,hard,tcp,intr ip=dhcp
+    initrd image/initrd
+}
