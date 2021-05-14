@@ -62,3 +62,8 @@ https://zhuanlan.zhihu.com/p/28708585
 Reference: 
 https://github.com/kuzoncby/misc-tutorial/blob/master/Troubleshooting-Failed-to-Load-ldlinux.c32.md
 
+# Beginner’s Guide to LVM (Logical Volume Management)
+Reference: 
+https://www.thegeekdiary.com/redhat-centos-a-beginners-guide-to-lvm-logical-volume-manager/
+https://www.2daygeek.com/create-lvm-storage-logical-volume-manager-in-linux/
+
