@@ -53,6 +53,16 @@ https://stackoverflow.com/questions/34042873/gcc-specs-file-how-to-get-the-insta
 The -rpath linker option will make the runtime loader search for libraries in /path/to/newglibc (so you wouldn't have to set LD_LIBRARY_PATH before running it), and the -dynamic-linker option will "bake" path to correct ld-linux.so.2 into the application.
   这样修复了mmoc爆出的错误。
   
+# 关于企业IT部署和应用关注点汇总
+1.简化企业IT管理和部署
+2.数据漫游 & 在不同终端设备之间实现数据同步
+3.存储数据加密 & 可信任计算
+4.切换设备时等待时间过长 (类似于one driver, 所有数据同时备份在云端)
+5.修电脑问题, 远程重装电脑，保留个人设置 (镜像恢复)和个人设置如何保留？
+6.企业OS image需要支持尽可能多的不同硬件配置
+7.云端、设备端如何智能分配任务，这需要在OS层面实现智能sense
+
+  
 # Boot Chain w/ UEFI Bootloader such as GRUB
 Reference: 
 https://segmentfault.com/a/1190000020850901
