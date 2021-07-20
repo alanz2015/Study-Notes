@@ -79,5 +79,5 @@ https://www.2daygeek.com/create-lvm-storage-logical-volume-manager-in-linux/
 
 # Understanding on UEFI for ARM
 Reference:
-https://www.programmersought.com/article/67683565129/
-https://rpi4-uefi.dev/
+https://www.programmersought.com/article/67683565129/ <br/>
+https://rpi4-uefi.dev/ <br/>
