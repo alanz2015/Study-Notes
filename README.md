@@ -75,7 +75,10 @@ https://github.com/kuzoncby/misc-tutorial/blob/master/Troubleshooting-Failed-to-
 # Beginner’s Guide to LVM (Logical Volume Management)
 Reference: 
 https://www.thegeekdiary.com/redhat-centos-a-beginners-guide-to-lvm-logical-volume-manager/
-https://www.2daygeek.com/create-lvm-storage-logical-volume-manager-in-linux/
+https://www.2daygeek.com/create-lvm-storage-logical-volume-manager-in-linux/<br/>
+
+# How to add physical drive into Virtual Volumn
+https://www.cyberciti.biz/faq/howto-add-disk-to-lvm-volume-on-linux-to-increase-size-of-pool/<br/>
 
 # Understanding on UEFI for ARM
 Reference:<br/>
