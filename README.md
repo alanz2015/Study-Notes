@@ -73,13 +73,30 @@ Reference:
 https://github.com/kuzoncby/misc-tutorial/blob/master/Troubleshooting-Failed-to-Load-ldlinux.c32.md
 
 # Beginner’s Guide to LVM (Logical Volume Management)
+LVM Storage Management divided into three parts:
+
+Physical Volumes (PV) – Actual disks (e.g. /dev/sda, /dev,sdb, /dev/vdb and so on). Useful commands: pvs, pvdisplay
+Volume Groups (VG) – Physical volumes are combined into volume groups. (e.g. my_vg = /dev/sda + /dev/sdb.). Useful commands: vgs, vgdisplay
+Logical Volumes (LV) – A volume group is divided up into logical volumes (e.g. my_vg divided into my_vg/data, my_vg/backups, my_vg/home, my_vg/mysqldb and so on). Useful commands: lvs, lvdisplay
+Based upon above commands, you can get a basic idea how LVM organizes storage device into Physical Volumes (PV), Volume Groups (VG), and Logical Volumes (LV).
+![](https://www.cyberciti.biz/faq/howto-add-disk-to-lvm-volume-on-linux-to-increase-size-of-pool/understanding-lvm-architecture/)
+Use command "lvmdiskscan -l" to retrieve active PV drives in Linux system.
+
 Reference: 
 https://www.thegeekdiary.com/redhat-centos-a-beginners-guide-to-lvm-logical-volume-manager/
 https://www.2daygeek.com/create-lvm-storage-logical-volume-manager-in-linux/<br/>
 
 # How to add physical drive into Virtual Volumn
 https://www.cyberciti.biz/faq/howto-add-disk-to-lvm-volume-on-linux-to-increase-size-of-pool/<br/>
-
+Step 1: sudo fdisk -l | grep '^Disk /dev/' // To output available "/dev/sdX" items;
+        sudo lvmdiskscan // To output registered Virtual Volumn inside system;
+        sudo pvcreate /dev/sdX // To create Physical Volumn bundled w/ the specific /dev/sdX;
+        sudo lvmdiskscan -l // To verify the new created PV existed.
+Step 2: sudo vgextend YourVG_Name /dev/sdX // YourVG_Name extracted from vgs active in the system, X stands for a, b, c, d, ...
+Step 3: sudo lvm lvextend -l +100%FREE /dev/YourVG_Name/YourVG_Group  // Take /dev/centos/home for example.
+Step 4: sudo xfs_growfs /dev/mapper/YourVGroupName  // Take /dev/mapper/centos-home for example, extends the specified Virtual Group size to accommodate new added SSDs
+        sudo df -H  // Check the storage size change
+        
 # Understanding on UEFI for ARM
 Reference:<br/>
 https://www.programmersought.com/article/67683565129/ <br/>
