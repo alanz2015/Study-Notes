@@ -73,29 +73,29 @@ Reference:
 https://github.com/kuzoncby/misc-tutorial/blob/master/Troubleshooting-Failed-to-Load-ldlinux.c32.md
 
 # Beginner’s Guide to LVM (Logical Volume Management)
-LVM Storage Management divided into three parts:
+LVM Storage Management divided into three parts:<br/>
 
-Physical Volumes (PV) – Actual disks (e.g. /dev/sda, /dev,sdb, /dev/vdb and so on). Useful commands: pvs, pvdisplay
-Volume Groups (VG) – Physical volumes are combined into volume groups. (e.g. my_vg = /dev/sda + /dev/sdb.). Useful commands: vgs, vgdisplay
-Logical Volumes (LV) – A volume group is divided up into logical volumes (e.g. my_vg divided into my_vg/data, my_vg/backups, my_vg/home, my_vg/mysqldb and so on). Useful commands: lvs, lvdisplay
-Based upon above commands, you can get a basic idea how LVM organizes storage device into Physical Volumes (PV), Volume Groups (VG), and Logical Volumes (LV).
+Physical Volumes (PV) – Actual disks (e.g. /dev/sda, /dev,sdb, /dev/vdb and so on). Useful commands: pvs, pvdisplay<br/>
+Volume Groups (VG) – Physical volumes are combined into volume groups. (e.g. my_vg = /dev/sda + /dev/sdb.). Useful commands: vgs, vgdisplay<br/>
+Logical Volumes (LV) – A volume group is divided up into logical volumes (e.g. my_vg divided into my_vg/data, my_vg/backups, my_vg/home, my_vg/mysqldb and so on). Useful commands: lvs, lvdisplay<br/>
+Based upon above commands, you can get a basic idea how LVM organizes storage device into Physical Volumes (PV), Volume Groups (VG), and Logical Volumes (LV).<br/>
 ![](https://www.cyberciti.biz/faq/howto-add-disk-to-lvm-volume-on-linux-to-increase-size-of-pool/understanding-lvm-architecture/)
-Use command "lvmdiskscan -l" to retrieve active PV drives in Linux system.
+Use command "lvmdiskscan -l" to retrieve active PV drives in Linux system.<br/>
 
-Reference: 
-https://www.thegeekdiary.com/redhat-centos-a-beginners-guide-to-lvm-logical-volume-manager/
+Reference: <br/>
+https://www.thegeekdiary.com/redhat-centos-a-beginners-guide-to-lvm-logical-volume-manager/<br/>
 https://www.2daygeek.com/create-lvm-storage-logical-volume-manager-in-linux/<br/>
 
 # How to add physical drive into Virtual Volumn
 https://www.cyberciti.biz/faq/howto-add-disk-to-lvm-volume-on-linux-to-increase-size-of-pool/<br/>
-Step 1: sudo fdisk -l | grep '^Disk /dev/' // To output available "/dev/sdX" items;
-        sudo lvmdiskscan // To output registered Virtual Volumn inside system;
-        sudo pvcreate /dev/sdX // To create Physical Volumn bundled w/ the specific /dev/sdX;
-        sudo lvmdiskscan -l // To verify the new created PV existed.
-Step 2: sudo vgextend YourVG_Name /dev/sdX // YourVG_Name extracted from vgs active in the system, X stands for a, b, c, d, ...
-Step 3: sudo lvm lvextend -l +100%FREE /dev/YourVG_Name/YourVG_Group  // Take /dev/centos/home for example.
-Step 4: sudo xfs_growfs /dev/mapper/YourVGroupName  // Take /dev/mapper/centos-home for example, extends the specified Virtual Group size to accommodate new added SSDs
-        sudo df -H  // Check the storage size change
+Step 1: sudo fdisk -l | grep '^Disk /dev/' // To output available "/dev/sdX" items;<br/>
+        sudo lvmdiskscan // To output registered Virtual Volumn inside system;<br/>
+        sudo pvcreate /dev/sdX // To create Physical Volumn bundled w/ the specific /dev/sdX;<br/>
+        sudo lvmdiskscan -l // To verify the new created PV existed.<br/>
+Step 2: sudo vgextend YourVG_Name /dev/sdX // YourVG_Name extracted from vgs active in the system, X stands for a, b, c, d, ...<br/>
+Step 3: sudo lvm lvextend -l +100%FREE /dev/YourVG_Name/YourVG_Group  // Take /dev/centos/home for example.<br/>
+Step 4: sudo xfs_growfs /dev/mapper/YourVGroupName  // Take /dev/mapper/centos-home for example, extends the specified Virtual Group size to accommodate new added SSDs<br/>
+        sudo df -H  // Check the storage size change<br/>
         
 # Understanding on UEFI for ARM
 Reference:<br/>
