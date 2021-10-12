@@ -101,3 +101,7 @@ Step 4: sudo xfs_growfs /dev/mapper/YourVGroupName  // Take /dev/mapper/centos-h
 Reference:<br/>
 https://www.programmersought.com/article/67683565129/ <br/>
 https://rpi4-uefi.dev/ <br/>
+
+# How to Install a Kubernetes Cluster on CentOS 8
+Reference:<br/>
+https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/ <br/>
