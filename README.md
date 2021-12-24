@@ -96,7 +96,10 @@ Step 2: sudo vgextend YourVG_Name /dev/sdX // YourVG_Name extracted from vgs act
 Step 3: sudo lvm lvextend -l +100%FREE /dev/YourVG_Name/YourVG_Group  // Take /dev/centos/home for example.<br/>
 Step 4: sudo xfs_growfs /dev/mapper/YourVGroupName  // Take /dev/mapper/centos-home for example, extends the specified Virtual Group size to accommodate new added SSDs<br/>
         sudo df -H  // Check the storage size change<br/>
-        
+# 如果需要将一个pv从一个lv中移出，如何做？
+Step 1: sudo lvreduce --size -300G /dev/mapper/app_data/share  // app_data/share depends on your concrete config <br />
+Step 2: sudo pvmove /dev/sdb1 <br />
+
 # Understanding on UEFI for ARM
 Reference:<br/>
 https://www.programmersought.com/article/67683565129/ <br/>
